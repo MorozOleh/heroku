@@ -1,18 +1,14 @@
-const express = require('express');
+const express = require("express");
 const PORT = process.env.PORT || 8000;
+
+const data = require("./data.json");
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.end(`
-  <div>
-    <ul>
-      <li><a href="/">homepage</a></li>
-      <li><a href="/about">about</a></li>
-    </ul>
- </div>`);
+app.get("/", (req, res) => {
+  res.json(data);
 });
-app.get('/about', (req, res) => {
+app.get("/about", (req, res) => {
   res.end(`
   <div>
     <ul>
