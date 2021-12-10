@@ -1,14 +1,25 @@
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
+
+const mysql = require('mysql');
 const PORT = process.env.PORT || 8000;
 
-const data = require("./data.json");
+const connectionString = process.env.DATABASE_URL || '';
+const connection = mysql.createConnection(connectionString);
+connection.connect();
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.json(data);
+app.get('/', (req, res) => {
+  const query = 'SELECT * FROM users';
+
+  connection.query(query, (err, rows) => {
+    if (err) throw err;
+
+    res.send(rows);
+  });
 });
-app.get("/about", (req, res) => {
+app.get('/about', (req, res) => {
   res.end(`
   <div>
     <ul>
